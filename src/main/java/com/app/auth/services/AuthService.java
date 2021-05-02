@@ -36,6 +36,8 @@ public class AuthService implements IAuthService {
     user = authRepo.findUserByUsername(username);
     password = Helpers.generateHashForPassword(password);
 
+    System.out.println(user.toString() + " " + password);
+
     if (user != null && password.compareTo(user.getPassword()) == 0) {
       System.out.println("Valid");
       return user;
