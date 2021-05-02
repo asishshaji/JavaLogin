@@ -38,7 +38,27 @@ public class AuthController {
     if (rUser == null) {
       model.addAttribute("message", Constants.userRegErrorMessage);
       return "failure";
-    } else { // send user to repository
+    } else {
+      model.addAttribute("message", Constants.userRegSuccessMessage);
+      return "success";
+    }
+  }
+
+  @GetMapping(value = "/login")
+  public String showLoginForm(Model model) {
+    User user = new User();
+    model.addAttribute("user", user);
+    return "loginForm";
+  }
+
+  @PostMapping(value = "/login")
+  public String loginSubmit(@ModelAttribute("user") User user, Model model) {
+    User rUser = authService.loginUser(user.getEmail(), user.getPassword());
+    if (rUser == null) {
+      model.addAttribute("message", Constants.userLoginErrorMessage);
+      return "failure";
+    } else {
+      model.addAttribute("welcomeMessage", "Welcome " + rUser.getEmail());
       model.addAttribute("message", Constants.userRegSuccessMessage);
       return "success";
     }

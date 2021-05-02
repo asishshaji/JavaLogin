@@ -2,6 +2,7 @@ package com.app.auth.services;
 
 import com.app.auth.entity.User;
 import com.app.auth.repository.AuthRepo;
+import com.app.auth.utils.Helpers;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,10 @@ public class AuthService implements IAuthService {
 
   @Override
   public User registerUser(String username, String password) {
-    // TODO Auto-generated method stub
     User user = new User();
 
-    System.out.println(authRepo.findByUsername(username));
-
     if (authRepo.findByUsername(username) == null) {
+      password = Helpers.generateHashForPassword(password);
       user.setEmail(username);
       user.setPassword(password);
       return authRepo.save(user);
@@ -33,7 +32,14 @@ public class AuthService implements IAuthService {
 
   @Override
   public User loginUser(String username, String password) {
-    // TODO Auto-generated method stub
+    User user = new User();
+    user = authRepo.findUserByUsername(username);
+    password = Helpers.generateHashForPassword(password);
+
+    if (user != null && password.compareTo(user.getPassword()) == 0) {
+      System.out.println("Valid");
+      return user;
+    }
     return null;
   }
 
@@ -46,7 +52,6 @@ public class AuthService implements IAuthService {
     } catch (NoSuchElementException e) {
       e.printStackTrace();
       return null;
-      //TODO: handle exception
     }
   }
 }
