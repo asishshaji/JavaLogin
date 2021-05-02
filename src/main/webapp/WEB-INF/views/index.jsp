@@ -71,8 +71,8 @@
     <div class="content">
         <div class="d-grid gap-3">
             <h1 class="display-4">Java Auth App</h1>
-            <a href="/login" class="btn btn-dark" role="button">Login </a>
-            <a href="/register" class="btn btn-light" role="button">Register</a>
+            <a href="/login" class="btn btn-dark p-2" role="button">Login </a>
+            <a href="/register" class="btn btn-light p-2" role="button">Register</a>
         </div>
     </div>
 </body>
